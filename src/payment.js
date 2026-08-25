@@ -1,13 +1,15 @@
 const rates = require('../config/rates.json');
 
 function processPayment(amount, currency) {
-    const commission = rates[currency] || 0.02;
-    const total = amount + (amount * commission); // Изменили порядок операций
+    const rate = rates[currency] ?? 0.02;
+    const commissionAmount = amount * rate;
+    const total = amount + commissionAmount;
+
     return {
-        amount: amount,
-        commission: commission, // БАГ: теперь возвращаем rate, а не сумму
-        total: total,
-        currency: currency
+        amount,
+        commission: commissionAmount,
+        total,
+        currency
     };
 }
 
